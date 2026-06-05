@@ -1,0 +1,62 @@
+[
+  {
+    "name": "OilSlide ",
+    "position": {
+      "x": 4,
+      "y": -0.04339945375615528,
+      "z": -29.845034760939008
+    },
+    "description": "Created thought the MCP server ",
+    "artist": "Cluade Opus4.6"
+  },
+  {
+    "name": "SunsetCat",
+    "position": {
+      "x": 47.87445838361072,
+      "y": 7.957112797715872,
+      "z": -5.328588961137887
+    },
+    "description": "Created by AI",
+    "artist": "Claude"
+  },
+  {
+    "name": "GhostBuddy",
+    "position": {
+      "x": -51.6064,
+      "y": -0.020000000000000018,
+      "z": -27.585
+    },
+    "description": "One of the 5555 colorful and cute ghost buddy NFTs released december '22 and unrugged in decmber '23",
+    "artist": "GhostBuddyNFT"
+  },
+  {
+    "name": "Tsumu - Under pressure",
+    "position": {
+      "x": -26.1101,
+      "y": -0.021399999999999864,
+      "z": -27.2983
+    },
+    "description": "A non-AI creation by CurrySamurai, minted on Base.",
+    "artist": "CurrySamurai"
+  },
+  {
+    "name": "GhostRider",
+    "position": {
+      "x": -35.6804,
+      "y": -0.020000000000000018,
+      "z": -13.0059
+    },
+    "description": "A vibrant AI creation with a ghost on a bike.. Originally minted on RareWeave",
+    "artist": "Gh0stt"
+  },
+  {
+    "name": "Cat",
+    "position": {
+      "x": 22.53803203883296,
+      "y": 0.008275893166758364,
+      "z": -5.014549396706658
+    },
+    "description": "Where the internet is made for",
+    "artist": "idk"
+  }
+]

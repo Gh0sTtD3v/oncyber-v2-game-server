@@ -319,12 +319,12 @@ export class ColyseusGameRoom extends Room {
 
     this._logger.info("Room disposed");
 
-    this._roomHandler?._CALLBACKS_.shutdown();
+    // this._roomHandler?._CALLBACKS_.shutdown();
 
     // startIdleTimeout();
-    if (isSingletonRoom) {
-      process.exit(0);
-    }
+    // if (isSingletonRoom) {
+    //   process.exit(0);
+    // }
   }
 }
 

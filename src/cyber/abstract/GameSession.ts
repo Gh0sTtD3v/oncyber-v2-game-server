@@ -1,18 +1,7 @@
 import { EventEmitter } from "events";
 import { type IncomingMessage } from "http";
 import { GameLoop } from "./GameLoop";
-import {
-  CYBER_MSG,
-  PLAYER_ROLES,
-  PlayerRole,
-  Messages,
-  GameActions,
-  ClientMessage,
-  PlayerData,
-  PongMsg,
-  PlayerStatePayload,
-  RpcHandler,
-} from "./types";
+import { CYBER_MSG, PLAYER_ROLES, PlayerRole, Messages, GameActions, ClientMessage, PlayerData, PongMsg, PlayerStatePayload, RpcHandler } from "./types";
 import { NetState, RoomState } from "../schema/RoomState";
 import { calcLatencyIPDTV } from "./utils";
 import { PlayerState } from "../schema/PlayerState";
@@ -338,9 +327,9 @@ export abstract class GameSession<
   _CALLBACKS_ = {
     create: async () => {
       //
-      this.spawn = this.gameData.components["spawn"];
+      // this.spawn = this.gameData.components["spawn"];
 
-      const mulitplayer = this.gameData.components["multiplayer"] ?? {};
+      const mulitplayer = this.gameData?.components?.["multiplayer"] ?? {};
 
       let settings = Object.assign({}, defaults, mulitplayer);
 

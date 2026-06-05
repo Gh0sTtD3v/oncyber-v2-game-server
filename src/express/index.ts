@@ -9,6 +9,8 @@ import { Mutex } from "async-mutex";
 import { GameApi } from "../cyber/abstract/GameApi";
 import { clearIdleTimeout } from "../timeout";
 import { verify } from "./authMiddleware";
+import { existsSync, readdirSync, statSync, writeFileSync } from "fs";
+import { resolve, join } from "path";
 
 const mutex = new Mutex();
 
@@ -23,6 +25,12 @@ const corsOptions = {
 const isSingleton = process.env.SINGLE_ROOM === "true";
 
 const ROOM_TYPE = "cyber-game";
+
+export interface Asset {
+	name: string;
+	position: { x: number; y: number; z: number };
+	[key: string]: any;
+}
 
 export function initializeExpress(app: any) {
   //
@@ -101,21 +109,23 @@ export function initializeExpress(app: any) {
 
       croomId ??= gameId;
 
-      // token is in X-Auth-Token header
-      const token = req.headers["x-auth-token"] as string;
+      if (false) {
+        // token is in X-Auth-Token header
+        const token = req.headers["x-auth-token"] as string;
 
-      if (userId !== "anon") {
-        //
-        if (!token) {
-          userId = "anon";
-        } else {
-          // verify token from cookie
-          const decodedToken = verify(token);
-          const uid = decodedToken?.uid;
-
-          if (uid?.toLowerCase() !== userId?.toLowerCase()) {
-            console.log("uid mismatch", uid, userId);
+        if (userId !== "anon") {
+          //
+          if (!token) {
             userId = "anon";
+          } else {
+            // verify token from cookie
+            const decodedToken = verify(token);
+            const uid = decodedToken?.uid;
+
+            if (uid?.toLowerCase() !== userId?.toLowerCase()) {
+              console.log("uid mismatch", uid, userId);
+              userId = "anon";
+            }
           }
         }
       }
@@ -267,6 +277,30 @@ export function initializeExpress(app: any) {
     }
   });
 
+  app.post("/initialize/:roomId", (req: Request, res: Response) => {
+    const { roomId } = req.params;
+    const assets: Asset[] = req.body;
+
+    console.log(`Initializing world for room ${roomId} with assets:`, assets);
+
+    if (!Array.isArray(assets)) {
+      res.status(400).json({ error: "Body must be an array of assets" });
+      return;
+    }
+
+    
+    // folder: __dirname/store
+    const folderPath = resolve(__dirname, "../../store");
+    if (!existsSync(folderPath)) {
+      console.log("Creating store folder at", folderPath);
+      return res.status(500).json({ error: "Store folder does not exist" });
+    }
+
+    writeFileSync(`${folderPath}/${roomId}.json`, JSON.stringify(assets, null, 2));
+    console.log(`World stored for room ${roomId} with ${assets.length} assets`);
+    res.json({ ok: true, count: assets.length });
+  });
+
   const basicAuthMiddleware = basicAuth({
     users: {
       admin: process.env.MONITOR_PASSWORD,
@@ -276,7 +310,7 @@ export function initializeExpress(app: any) {
 
   app.use(
     "/monitor",
-    basicAuthMiddleware,
+    // basicAuthMiddleware,
     monitor({
       columns: [
         "roomId",
